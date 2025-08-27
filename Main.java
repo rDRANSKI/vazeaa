@@ -149,6 +149,7 @@ public class Main {
 								break;
 						}
 					}
+					break;//faltava esse brake aqui se nao poderia pular direto para o case 3
 					
 				case 3:
 					System.out.println("Você saiu do Sistema. Até mais!!");
