@@ -1,232 +1,199 @@
 package TrabalhoArtesanal;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
-public class Cliente {
-	public String nome;
-	private String cpf;
-	private String email;
-	private String senha;
-	private String autenticarSenha;
-	public String cep;
-	public String endereco;
-	public int numCasa;
-	private String dataNasc;
-	private String complemento;
-	private ModoVendedor modoVendedor;
-	
-	public Cliente(String nome, String cpf, String email, String senha, String autenticarSenha, String cep,
-			String endereco, int numCasa, String dataNasc, String complemento) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.email = email;
-		this.senha = senha;
-		this.autenticarSenha = autenticarSenha;
-		this.cep = cep;
-		this.endereco = endereco;
-		this.numCasa = numCasa;
-		this.dataNasc = dataNasc;
-		this.complemento = complemento;
-		this.modoVendedor = new ModoVendedor(this);
-	}
+public class Main {
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getAutenticarSenha() {
-		return autenticarSenha;
-	}
-
-	public void setAutenticarSenha(String autenticarSenha) {
-		this.autenticarSenha = autenticarSenha;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public int getNumCasa() {
-		return numCasa;
-	}
-
-	public void setNumCasa(int numCasa) {
-		this.numCasa = numCasa;
-	}
-
-	public String getDataNasc() {
-		return dataNasc;
-	}
-
-	public void setDataNasc(String dataNasc) {
-		this.dataNasc = dataNasc;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-	
-	public ModoVendedor getModoVendedor() {
-		return modoVendedor;
-	}
-	
-	public String cadastrar() {
-        return "Seu cadastro foi realizado: " + this.nome;
-    }
-	
-	public void atualizarDados(Scanner sc) {				// Troquei de STRING para VOID.
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
 		
-		int opcaoAtualizarDados = -1;
+		Cliente clienteLogado = null; //Aqui está para podee utilizar para visual perfil.
 		
-		while (opcaoAtualizarDados != 0) {
-			System.out.println("\n=== ATUALIZAR DADOS ===");
-			System.out.println("1. Alterar email");
-			System.out.println("2. Alterar senha");
-			System.out.println("3. Alterar endereço");
-			System.out.println("4. Alterar CEP");
-			System.out.println("5. Alterar número da casa");
-			System.out.println("6. Alterar complemento");
-			System.out.println("0. Voltar");
+		while (clienteLogado == null) {
+			System.out.println("\n=== MENU CADASTRO ===");
+			System.out.println("1. Cadastrar");
+			System.out.println("2. Login");
+			System.out.println("3. Sair");
+			System.out.println("Escolha uma opção: ");
 			
-			opcaoAtualizarDados = sc.nextInt();
+			int opcaoCadastro = sc.nextInt();
 			sc.nextLine();
 			
-			switch (opcaoAtualizarDados) {
+			switch (opcaoCadastro) {
 				case 1:
-					System.out.println("Digite o seu novo email: ");
-					String novoEmail = sc.nextLine();
-					
-					if (novoEmail.equals(this.email)) {
-						System.out.println("O email digitado é igual ao seu email atual. Por favor, insira um email diferente.");
-					} else {
-						this.email = novoEmail;
-						System.out.println("Email atualizado com sucesso para: " + novoEmail);
-					}
-					break;
-					
+					String nome;
+					while (true) {
+					 System.out.println("Digite o seu nome (somente letras): ");
+				        nome = sc.nextLine().trim();
+				        if (nome.matches("[A-Za-zÀ-ÿ ]+")) {//SELEÇÃO DE SOMENTE LETRAS
+				        		break;
+				        	}else {
+				        		System.out.println("Nome inválido!!!n USE SOMENTE LETRAS E ESPAÇOS!!!");
+				        	}
+				        }
+				        String cpf;
+				        while (true) {
+				        System.out.println("Digite o seu CPF: ");
+				        cpf = sc.nextLine().trim();
+				        if(cpf.matches("\\d{11}")) break;//APENAS 11 DIGITOS DE NUMERO
+				        System.out.println("CPF inválido! Digite novamente exatamente 11 NUMEROS...");
+				        }
+				        
+				        String email;
+				        while (true) {
+				        System.out.println("Digite o seu email (deve conter @): ");//DA PARA ADICIONAR UM @GMAIL.COM SE QUISER
+				        email = sc.nextLine().trim();
+				        if (email.contains("@")|| email.length()<5) break;
+				        	System.out.println("Email inválido!!!");
+				        }
+				        
+
+				        System.out.println("Digite a sua senha: ");
+				        String senha = sc.nextLine();
+
+				        System.out.println("Digite a sua senha novamente: ");
+				        String autenticarSenha = sc.nextLine();
+
+				        while (!autenticarSenha.equals(senha)) {
+				            System.out.println("As senhas não coincidem. Tente novamente.");
+							System.out.println("\nConfirme sua senha: ");
+				            autenticarSenha = sc.nextLine();
+				        }
+				        String dataNasc;
+				        while (true) {
+				        System.out.println("Digite sua data de nascimento: DD/MM/AAAA");
+				        dataNasc = sc.nextLine().trim();
+				        if (dataNasc.matches("\\d{2}/\\d{2}/\\d{4}"))break;
+				        System.out.println("Formato inválido. Use DD/MM/AAAA");
+				        }
+				        
+
+				        System.out.println("Digite o seu CEP: ");
+				        String cep = sc.nextLine();
+
+				        System.out.println("Digite o seu endereço: ");
+				        String endereco = sc.nextLine();
+
+				        System.out.println("Digite o número da casa: ");
+				        int numCasa = sc.nextInt();
+				        sc.nextLine();
+
+				        System.out.println("Complemento: ");
+				        String complemento = sc.nextLine();
+				        
+				        Cliente novoCliente = new Cliente(nome, cpf, email, senha, autenticarSenha, cep,
+				    	endereco, numCasa, dataNasc, complemento);
+				        clientesCadastrados.add(novoCliente);
+				        
+				        System.out.println(novoCliente.cadastrar());
+				        break;
+				        
 				case 2:
-					System.out.println("Digite sua nova senha: ");
-					String novaSenha = sc.nextLine();
-					
-					if (novaSenha.equals(this.senha)) {
-						System.out.println("A senha digitada é igual a anterior. Por favor, insira uma senha diferente.");
-					} else {
-						this.senha = novaSenha;
-						System.out.println("Senha atualizado com sucesso!");
+					while (clienteLogado == null) {
+						System.out.println("Email: ");
+						String emailLogin = sc.nextLine();
+						
+						System.out.println("Senha: ");
+						String senhaLogin = sc.nextLine();
+						
+						for (Cliente clienteAtual : clientesCadastrados) {
+							if (clienteAtual.getEmail().equals(emailLogin) && clienteAtual.getSenha().equals(senhaLogin)) {
+								System.out.println("Login realizado com sucesso! Seja bem-vindo" + clienteAtual.getNome());
+								clienteLogado = clienteAtual; //Armazena o clienteAtual como clienteLogado
+								break;
+							}
+						}
+						if (clienteLogado == null) {
+							System.out.println("Email ou senha inválidos!");
+						}
+					}
+							
+					while (clienteLogado != null) {
+						System.out.println("\n=== MENU LOGADO ===");
+						System.out.println("1. Visualizar Perfil");
+						System.out.println("2. Atualizar Dados");
+						System.out.println("3. Modo Vendedor");
+						System.out.println("4. Excluir conta");
+						System.out.println("5. Sair da conta");
+						System.out.println("Escolha uma opção: ");
+						
+						int opcaoLogin = sc.nextInt();
+						sc.nextLine();
+						
+						switch (opcaoLogin) {
+							case 1:
+								clienteLogado.visualizarPerfil();
+								break;
+								
+							case 2:
+								clienteLogado.atualizarDados(sc); //sc para chamar o que usario digitou dentro do metodo na Classe Cliente.
+								break;
+								
+							case 3:
+								System.out.println("Você está no modo vendedor.");
+								while (true) {
+									System.out.println("\n=== MENU VENDEDOR ===");
+									System.out.println("1. Adicionar item");
+									System.out.println("2. Atualizar dados");
+									System.out.println("3. Voltar para o menu cliente");
+									System.out.println("Escolha uma opção: ");
+									
+									int opcaoVendedor = sc.nextInt();
+									sc.nextLine();
+									
+									switch (opcaoVendedor) {
+										case 1:
+											clienteLogado.getModoVendedor().adicionarItem(sc);
+											break;
+										case 2:
+											clienteLogado.atualizarDados(sc);
+											break;
+										case 3:
+											System.out.println("Saindo do modo vendedor...");
+											break;
+										default:
+											System.out.println("Opção inválida.");
+									}
+									
+									if (opcaoVendedor == 3) {
+										break;
+									}
+								}
+								break;
+								
+							case 4:
+								String excluirConta = clienteLogado.excluir(sc);
+								
+								if (excluirConta.equals("sim")) {
+									clientesCadastrados.remove(clienteLogado);
+									clienteLogado = null;
+								}
+								break;
+							
+							case 5:
+								System.out.println("Voce saiu da sua conta. Até mais "+ clienteLogado.getNome()+"!");
+								clienteLogado = null;
+								break;
+								
+							default:
+								System.out.println("Opção invalida");//adicionado case 5, para sair da conta se o cliente preferir 
+						}
 					}
 					break;
 					
 				case 3:
-					System.out.println("Digite seu novo endereço: ");
-					String novoEndereco = sc.nextLine();
-					
-					this.endereco = novoEndereco;
-					System.out.println("Endereço atualizado com sucesso!");
-					break;
-					
-				case 4: 
-					System.out.println("Digite o seu novo CEP: ");
-					String novoCEP = sc.nextLine();
-					
-					this.cep = novoCEP;
-					System.out.println("CEP atualizado com sucesso!");
-					break;
-					
-				case 5:
-					System.out.println("Digite o novo número da casa: ");
-					int novoNumCasa = sc.nextInt();
-					
-					this.numCasa = novoNumCasa;
-					System.out.println("Número da casa atualizado com sucesso!");
-					break;
-					
-				case 6:
-					System.out.println("Digite o novo complemento: ");
-					String novoComplemento = sc.nextLine();
-					
-					this.complemento = novoComplemento;
-					System.out.println("Complemento atualizado com sucesso!");
-					break;
-					
-				case 0:
+					System.out.println("Você encerrou o Sistema. Até mais!!");
+					sc.close();
+					System.exit(0);//adicionado para encerrar o codigo, pois estava printando "voce saiu...."
+					//sem mesmo estar logado. então é uma opção, quando nao logado, no menu cadastro, encerrar codigo.
 					break;
 					
 				default:
-					System.out.println("Está opçõa é inválida");
+					System.out.println("Está opção é inválida!");
 					break;
 			}
 		}
-	}
-	
-	public void visualizarPerfil() {				
-		System.out.println("=== PERFIL DO CLIENTE ===");
-		System.out.println("Nome: " + this.nome);
-		System.out.println("Email: " + this.email);
-		System.out.println("Endereço: " + this.endereco);
-		System.out.println("CEP: " + this.cep);
-		System.out.println("Número da Casa: " + this.numCasa);
-		System.out.println("Complemento: " + this.complemento);
-	}
-	
-	public String excluir(Scanner sc) {
-		System.out.println("Tem certeza que deseja excluir sua conta? [S/N]");
-		String excluirConta = sc.nextLine();
-		
-		if (excluirConta.equalsIgnoreCase("s")) {
-			System.out.println("Conta exclúida com sucesso.");
-			return "sim"; //posso remover
-		} else {
-			System.out.println("Exclusão cancelada.");
-			return "nao"; //não remover
-		}
-	}
-	
-	public void entrarModoVendedor(Scanner sc) {
-		
 	}
 }
