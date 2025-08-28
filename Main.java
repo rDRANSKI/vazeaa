@@ -23,14 +23,32 @@ public class Main {
 			
 			switch (opcaoCadastro) {
 				case 1:
-					 System.out.println("Digite o seu nome: ");
-				        String nome = sc.nextLine();
-
+					String nome;
+					while (true) {
+					 System.out.println("Digite o seu nome (somente letras): ");
+				        nome = sc.nextLine().trim();
+				        if (nome.matches("[A-Za-zÀ-ÿ ]+")) {
+				        		break;
+				        	}else {
+				        		System.out.println("Nome inválido!!!n USE SOMENTE LETRAS E ESPAÇOS!!!");
+				        	}
+				        }
+				        String cpf;
+				        while (true) {
 				        System.out.println("Digite o seu CPF: ");
-				        String cpf = sc.nextLine();
-
-				        System.out.println("Digite o seu email: ");
-				        String email = sc.nextLine();
+				        cpf = sc.nextLine().trim();
+				        if(cpf.matches("\\d{11}")) break;
+				        System.out.println("CPF inválido! Digite novamente exatamente 11 NUMEROS...");
+				        }
+				        
+				        String email;
+				        while (true) {
+				        System.out.println("Digite o seu email (deve conter @): ");
+				        email = sc.nextLine().trim();
+				        if (email.contains("@")|| email.length()<5) break;
+				        	System.out.println("Email inválido!!!");
+				        }
+				        
 
 				        System.out.println("Digite a sua senha: ");
 				        String senha = sc.nextLine();
@@ -43,9 +61,14 @@ public class Main {
 							System.out.println("\nConfirme sua senha: ");
 				            autenticarSenha = sc.nextLine();
 				        }
-
+				        String dataNasc;
+				        while (true) {
 				        System.out.println("Digite sua data de nascimento: DD/MM/AAAA");
-				        String dataNasc = sc.nextLine();
+				        dataNasc = sc.nextLine().trim();
+				        if (dataNasc.matches("\\d{2}/\\d{2}/\\d{4}"))break;
+				        System.out.println("Formato inválido. Use DD/MM/AAAA");
+				        }
+				        
 
 				        System.out.println("Digite o seu CEP: ");
 				        String cep = sc.nextLine();
@@ -93,6 +116,7 @@ public class Main {
 						System.out.println("2. Atualizar Dados");
 						System.out.println("3. Modo Vendedor");
 						System.out.println("4. Excluir conta");
+						System.out.println("5. Sair da conta");
 						System.out.println("Escolha uma opção: ");
 						
 						int opcaoLogin = sc.nextInt();
@@ -147,13 +171,23 @@ public class Main {
 									clienteLogado = null;
 								}
 								break;
+							
+							case 5:
+								System.out.println("Voce saiu da sua conta. Até mais "+ clienteLogado.getNome()+"!");
+								clienteLogado = null;
+								break;
+								
+							default:
+								System.out.println("Opção invalida");
 						}
 					}
-					break;//faltava esse brake aqui se nao poderia pular direto para o case 3
+					break;
 					
 				case 3:
-					System.out.println("Você saiu do Sistema. Até mais!!");
-					clienteLogado = null; //Não mostrar o MENU.
+					System.out.println("Você encerrou o Sistema. Até mais!!");
+					sc.close();
+					System.exit(0);//adicionado para encerrar o codigo, pois estava printando "voce saiu...."
+					//sem mesmo estar logado. então é uma opção, quando nao logado, no menu cadastro, encerrar codigo.
 					break;
 					
 				default:
