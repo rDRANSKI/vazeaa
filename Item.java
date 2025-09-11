@@ -74,12 +74,6 @@ public class Item {
 	
 	// --- MÉTODOS ---
 	
-	
-
-	public void adicionarCarrinho() {
-		System.out.println("Item adicionado ao carrinho!");
-	}
-	
 	public void exibirItens() {
 		System.out.println("Id: "+ id);
 		System.out.println("Nome: "+ nomeItem);
