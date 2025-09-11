@@ -1,479 +1,290 @@
 package catalogoArtesanal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class ClienteTeste {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Cliente> lista = new ArrayList<>();
-        Cliente clienteLogado = null;
-        String confSenha;
-        int numCasaC = 0;
-        boolean logado;
+public class Cliente {
+	public String nome;
+	private String cpf;
+	private String email;
+	private String senha;
+	private String autenticarSenha;
+	public String cep;
+	public String endereco;
+	public int numCasa;
+	private String dataNasc;
+	private String complem;
+	private ModoVendedor vendedor;
+	
+	 private ArrayList<Item> meusItens = new ArrayList<>();
+	 private String descricaoVendedor;
+	
+	public Cliente(String nome, String cpf, String email, String senha, String autenticarSenha, String cep, String endereco, int numCasa, String dataNasc, String complem) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.senha = senha;
+		this.autenticarSenha = autenticarSenha;
+		this.cep = cep;
+		this.endereco = endereco;
+		this.numCasa = numCasa;
+		this.dataNasc = dataNasc;
+		this.complem = complem;
+		this.vendedor = null; 
+	}
+	
+	public ArrayList<Item> getMeusItens() {
+	    return meusItens;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
 
-        while (true) {
-            System.out.println("\n---MENU---");
-            System.out.println("1. Criar conta");
-            System.out.println("2. Login");
-            System.out.println("0. Sair");
-            System.out.println("Escolha uma opção:");
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-            int op = 0;
-            
-            try {
-                op = sc.nextInt();
-            } catch (InputMismatchException e) { //Exceção para somente o Scanner pedido: Inteiro
-                System.out.println("Entrada inválida! Digite apenas números.");
-                sc.nextLine();
-                continue;
-            }
-            sc.nextLine();
+	public String getCpf() {
+		return cpf;
+	}
 
-            switch (op) {
-                case 1:
-                    String nomeC;
-                    while (true) {
-                        System.out.println("Digite seu nome (apenas letras): ");
-                        nomeC = sc.nextLine().trim(); 	 // Não ler espaços em branco no começo e fim (somente meio)
-                        if (nomeC.matches("[A-Za-zÀ-ÿ ]+")) break; 		//Verifica se nomeC corresponde ao padrão do REGEX
-                        System.out.println("Nome inválido! Use apenas letras e espaços.");
-                    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-                    String cpfC;
-                    while (true) {
-                        System.out.println("CPF (11 dígitos, apenas números): ");
-                        cpfC = sc.nextLine().trim();
-                        if (cpfC.matches("\\d{11}")) break;
-                        System.out.println("CPF inválido. Certifique-se de digitar 11 números, sem pontos ou traços.");
-                    }
+	public String getEmail() {
+		return email;
+	}
 
-                    String emailC;
-                    while (true) {
-                        System.out.println("Email (deve ser um endereço @gmail.com): ");
-                        emailC = sc.nextLine().trim();
-                        if (emailC.endsWith("@gmail.com")) break;
-                        System.out.println("Email invalido. Apenas endereços @gmail.com são aceitos.");
-                    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-                    String dataNascC;
-                    while (true) {
-                        System.out.println("Data de Nascimento (formato: DD/MM/AAAA): ");
-                        dataNascC = sc.nextLine().trim();
-                        if (dataNascC.matches("\\d{2}/\\d{2}/\\d{4}")) break;
-                        System.out.println("Formato inválido! Use o formato DD/MM/AAAA.");
-                    }
+	public String getSenha() {
+		return senha;
+	}
 
-                    String cepC;
-                    while (true) {
-                        System.out.println("CEP (formato: 00000-000): ");
-                        cepC = sc.nextLine().trim();
-                        if (cepC.matches("\\d{5}-\\d{3}")) break;
-                        System.out.println("CEP inválido! Use o formato 00000-000.");
-                    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-                    String enderecoC;
-                    while (true) {
-                        System.out.println("Endereço (somente letras e espaços): ");
-                        enderecoC = sc.nextLine().trim();
-                        if (enderecoC.matches("[A-Za-zÀ-ÿ ]+")) break;
-                        System.out.println("Endereço inválido! Use apenas letras e espaços.");
-                    }
+	public String getAutenticarSenha() {
+		return autenticarSenha;
+	}
 
-                    while (true) {
-                        System.out.println("Número da casa: ");
-                        String numCasaStr = sc.nextLine().trim();
-                        if (numCasaStr.matches("\\d+")) {
-                            numCasaC = Integer.parseInt(numCasaStr);
-                            break;
-                        }
-                        System.out.println("Número inválido! Digite apenas NÚMEROS.");
-                    }
+	public void setAutenticarSenha(String autenticarSenha) {
+		this.autenticarSenha = autenticarSenha;
+	}
 
-                    System.out.println("Complemento (opcional): ");
-                    String complemC = sc.nextLine();
+	public String getCep() {
+		return cep;
+	}
 
-                    String senhaC;
-                    while (true) {
-                        System.out.println("Crie uma senha (mínimo 6 caracteres): ");
-                        senhaC = sc.nextLine();
-                        if (senhaC.length() >= 6) break;
-                        System.out.println("Senha inválida! Deve ter pelo menos 6 caracteres.");
-                    }
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	
+	public String getEndereco() {
+		return endereco;
+	}
 
-                    do {
-                        System.out.println("Repita a senha: ");
-                        confSenha = sc.nextLine();
-                        if (!confSenha.equals(senhaC)) {
-                            System.out.println("As senhas não conferem. Tente novamente!");
-                        }
-                    } while (!confSenha.equals(senhaC));
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 
-                    lista.add(new Cliente(nomeC, cpfC, emailC, senhaC, confSenha, cepC, enderecoC, numCasaC, dataNascC, complemC));
-                    System.out.println("Conta criada com sucesso.");
-                    break;
+	public int getNumCasa() {
+		return numCasa;
+	}
 
-                case 2:
-                    if (lista.isEmpty()) {
-                        System.out.println("Usuário ou senha inválidos.");
-                        break;
-                    }
+	public void setNumCasa(int numCasa) {
+		this.numCasa = numCasa;
+	}
 
-                    System.out.println("E-mail: ");
-                    String emailLogin = sc.nextLine();
+	public String getDataNasc() {
+		return dataNasc;
+	}
 
-                    System.out.println("Senha: ");
-                    String senhaLogin = sc.nextLine();
+	public void setDataNasc(String dataNasc) {
+		this.dataNasc = dataNasc;
+	}
 
-                    clienteLogado = null;
-                    for (Cliente cliente : lista) {
-                        if (cliente.getEmail().equals(emailLogin) && cliente.getSenha().equals(senhaLogin)) {
-                            clienteLogado = cliente;
-                            break;
-                        }
-                    }
+	public String getComplem() {
+		return complem;
+	}
 
-                    if (clienteLogado == null) {
-                        System.out.println("E-mail ou senha incorretos!");
-                        break;
-                    }
+	public void setComplem(String complem) {
+		this.complem = complem;
+	}
+	
+	
+	// --- MÉTODOS ---
+	
+	public boolean isModoVendedor() {
+	    return vendedor != null;
+	}
+	
+	
+	//VISUALIZAR PERFIL
+	public void visualizarPerfil() {
+		System.out.println("\n--- PERFIL ---");
+		System.out.println("Nome: " + nome);
+		System.out.println("E-mail: " + email);
+		System.out.println("CPF: " + cpf);
+		System.out.println("Data de nascimento: " + (dataNasc != null ? dataNasc : "Não informado"));
+		System.out.println("CEP: " + cep);
+		System.out.println("Endereço: " + endereco + ", " + numCasa);
+		System.out.println("Complemento: " + (complem != null ? complem : "Não informado"));
+	    if (isModoVendedor()) {
+	        System.out.println("Modo vendedor: Ativado");
+	        System.out.println("Descrição: " + vendedor.getDescricao());
+	    } else {
+	        System.out.println("Modo vendedor: Desativado");
+	    }
+	}
+		
 
-                    System.out.println("Login realizado com sucesso! Bem-vindo, " + clienteLogado.getNome() + "!");
-                    logado = true;
+	//ALTERAR DADOS
+	public void alterarDados(Scanner sc) {
+		try {
+			System.out.println("\n--- DIGITE A OPÇÃO DESEJADA: ---");
+			System.out.println("1. Alterar Nome");
+			System.out.println("2. Alterar Email");
+			System.out.println("3. Alterar Endereço");
+			System.out.println("4. Alterar Senha");
+			if (isModoVendedor()) {
+				System.out.println("5. Alterar Descrição: ");
+			}
+			System.out.println("Escolha uma opção:");
+			int opAlterar= sc.nextInt();
+			sc.nextLine();
+			
+			if (!isModoVendedor() && (opAlterar == 6)) {
+			    System.out.println("Opção inválida, tente novamente!");
+			    return; 
+			}
+			
+			switch(opAlterar) {
+			case 1: 
+				System.out.println("\nNovo nome: ");
+				String novoNome = sc.nextLine().trim();
+				
+				if (novoNome.isEmpty()) {
+					System.out.println("O nome não pode ser vazio!");
+				} else if (novoNome.matches("[A-Za-zÀ-ÿ ]+")) {
+					System.out.println("Nome inválido! Use apenas letras e espaços.");
+				} else if (novoNome.equals(this.nome)) {
+					System.out.println("O nome digitado é igual ao já cadastrado. Tente novamente!");
+				} else {
+					this.nome = novoNome;
+					System.out.println("Nome alterado com sucesso!");
+				}
+				break;
+			
+			case 2:
+				System.out.println("Novo email: ");
+				String novoEmail = sc.nextLine().trim();
+				
+				if (novoEmail.isEmpty()) {
+			        System.out.println("O email digitado não pode ser vazio!");
+			    } else if (!novoEmail.endsWith("@gmail.com")) {
+			        System.out.println("Email invalido. Apenas endereços @gmail.com são aceitos.");		        
+			    } else if (novoEmail.equals(this.email)) {
+			        System.out.println("O email digitado é igual ao já cadastrado. Tente novamente!");   
+			    } else {
+			        this.email = novoEmail;
+			        System.out.println("Email alterado com sucesso!");
+			    }
+			    break;
 
-                    while (logado) {
-                        System.out.println("\n--- MENU DO CLIENTE ---");
-                        System.out.println("1. Visualizar Perfil");
-                        System.out.println("2. Alterar Dados");
-                        System.out.println("3. Modo Vendedor");
-                        System.out.println("4. Comprar");
-                        System.out.println("5. Excluir Conta");
-
-                        if (clienteLogado.isModoVendedor()) {
-                            System.out.println("6. Visualizar meus itens");
-                            System.out.println("7. Adicionar item");
-                            System.out.println("8. Atualizar item");
-                            System.out.println("9. Remover item");
-                        }
-
-                        System.out.println("0. Sair");
-                        System.out.println("Escolha uma opção:");
-
-                        int opLogin = 0;
-                        try {
-                            opLogin = sc.nextInt();
-                        } catch (InputMismatchException e) {
-                            System.out.println("Entrada inválida! Digite apenas números.");
-                            sc.nextLine();
-                            continue;
-                        }
-                        sc.nextLine();
-
-                        if (!clienteLogado.isModoVendedor() && (opLogin >= 6 && opLogin <= 9)) {
-                            System.out.println("Opção inválida, tente novamente!");
-                            break;
-                        }
-
-                        switch(opLogin) {
-                            case 1:
-                                clienteLogado.visualizarPerfil();
-                                break;
-
-                            case 2:
-                                clienteLogado.alterarDados(sc);
-                                break;
-
-                            case 3:
-                                System.out.println("Modo Vendedor: ");
-                                System.out.println("1. Ativar\n2. Desativar");
-                                int opMV = 0;
-                                try {
-                                    opMV = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Entrada inválida! Digite apenas números.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-                                if(opMV == 1) {
-                                    clienteLogado.ativarModoVendedor(sc);
-                                } else if(opMV == 2) {
-                                    clienteLogado.desativarModoVendedor(sc);
-                                } else {
-                                    System.out.println("Opção inválida, tente novamente!");
-                                }
-                                break;
-
-                            case 4:
-                                ArrayList<Item> catalogoPublico = new ArrayList<>();
-                                for (Cliente c : lista) {
-                                    if (c.isModoVendedor()) {
-                                        catalogoPublico.addAll(c.getMeusItens());
-                                    }
-                                }
-
-                                if (catalogoPublico.isEmpty()) {
-                                    System.out.println("Nenhum item disponível para compra!");
-                                    break;
-                                }
-
-                                Carrinho carrinho = new Carrinho();
-                                boolean comprando = true;
-
-                                while (comprando) {
-                                    System.out.println("\n--- CATÁLOGO DE ITENS ---");
-                                    for (Item item : catalogoPublico) {
-                                        item.exibirItens();
-                                    }
-
-                                    System.out.println("Digite o ID do item que deseja comprar (ou '0' para finalizar): ");
-                                    int idCompra = 0;
-                                    try {
-                                        idCompra = sc.nextInt();
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada inválida! Digite apenas números.");
-                                        sc.nextLine();
-                                        continue;
-                                    }
-
-                                    if (idCompra == 0) {
-                                        sc.nextLine();
-                                        comprando = false;
-                                        break;
-                                    }
-
-                                    Item itemEscolhido = null;
-                                    for (Item item : catalogoPublico) {
-                                        if (item.getId() == idCompra) {
-                                            itemEscolhido = item;
-                                            break;
-                                        }
-                                    }
-
-                                    if (itemEscolhido == null) {
-                                        System.out.println("Item não encontrado!");
-                                        sc.nextLine();
-                                        continue;
-                                    }
-
-                                    System.out.println("Quantidade desejada: ");
-                                    int qtdCompra = 0;
-                                    try {
-                                        qtdCompra = sc.nextInt();
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada inválida! Digite apenas números.");
-                                        sc.nextLine();
-                                        continue;
-                                    }
-                                    sc.nextLine();
-
-                                    if (qtdCompra > itemEscolhido.getQuantItem()) {
-                                        System.out.println("Quantidade indisponível em estoque!");
-                                    } else {
-                                        carrinho.adicionarItem(itemEscolhido, qtdCompra);
-                                        itemEscolhido.setQuantItem(itemEscolhido.getQuantItem() - qtdCompra);
-                                        System.out.println("Item adicionado ao carrinho!");
-                                    }
-                                }
-
-                                if (carrinho.getItens().isEmpty()) {
-                                    System.out.println("Carrinho vazio. Compra cancelada!");
-                                    break;
-                                }
-                                System.out.println("\n--- SEU CARRINHO ---");
-                                carrinho.visualizarCarrinho();
-
-                                Frete frete = new Frete(clienteLogado.getCep());
-                                double valorFrete = frete.calcularFrete();
-                                System.out.println("Valor do frete: R$ " + valorFrete);
-
-                                double total = carrinho.calcularTotal() + valorFrete;
-                                System.out.println("Total da compra: R$ " + total);
-
-                                System.out.println("\nEscolha a forma de pagamento:");
-                                System.out.println("1. Pix");
-                                System.out.println("2. Cartão");
-                                int opPag = 0;
-                                try {
-                                    opPag = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Entrada inválida! Digite apenas números.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-
-                                Pagamento pagamento;
-                                if (opPag == 1) {
-                                    pagamento = new Pix();
-                                } else {
-                                    System.out.println("Número do cartão: ");
-                                    String numCartao = sc.nextLine();
-                                    System.out.println("Nome do titular: ");
-                                    String nomeTitular = sc.nextLine();
-                                    System.out.println("CVV: ");
-                                    int cvv = 0;
-                                    try {
-                                        cvv = sc.nextInt();
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Entrada inválida! Digite apenas números.");
-                                        sc.nextLine();
-                                        break;
-                                    }
-                                    sc.nextLine();
-                                    pagamento = new Cartao(numCartao, nomeTitular, cvv);
-                                }
-
-                                pagamento.processarPagamento(total);
-                                System.out.println("Compra finalizada com sucesso!");
-                                break;
-
-                            case 5:
-                                System.out.println("Deseja mesmo excluir sua conta? \n1.Sim \n2.Não");
-                                int opExcluirConta = 0;
-                                try {
-                                    opExcluirConta = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Entrada inválida! Digite apenas números.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-
-                                if(opExcluirConta == 1) {
-                                    lista.remove(clienteLogado);
-                                    System.out.println("Conta excluída!");
-                                    clienteLogado = null;
-                                    logado = false;
-                                    break;
-                                } else {
-                                    System.out.println("Exclusão de conta cencelada!");
-                                    break;
-                                }
-
-                            case 6:
-                                if(clienteLogado.getMeusItens().isEmpty()) {
-                                    System.out.println("Nenhum item adicionado!");
-                                    break;
-                                }
-                                System.out.println("\n--- Meus Itens ---");
-                                for(Item item : clienteLogado.getMeusItens()) {
-                                    item.exibirItens();
-                                }
-                                break;
-
-                            case 7:
-                                System.out.println("Nome do item: ");
-                                String nomeI = sc.nextLine();
-                                System.out.println("Valor: ");
-                                double valorI = 0;
-                                try {
-                                    valorI = sc.nextDouble();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Valor inválido! Digite um número.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                System.out.println("Quantidade: ");
-                                int quantI = 0;
-                                try {
-                                    quantI = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Quantidade inválida! Digite um número.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-                                System.out.println("Descrição: ");
-                                String descricaoI = sc.nextLine();
-                                String nomeVendI = clienteLogado.nome;
-                                clienteLogado.getMeusItens().add(new Item(nomeI, valorI, quantI, descricaoI, nomeVendI));
-                                System.out.println("Item criado com sucesso!");
-                                break;
-
-                            case 8:
-                                if(clienteLogado.getMeusItens().isEmpty()) {
-                                    System.out.println("Nenhum item adicionado!");
-                                    break;
-                                }
-
-                                for(Item item : clienteLogado.getMeusItens()) {
-                                    item.exibirItens();
-                                }
-
-                                System.out.println("Digite o ID do item que deseja atualizar:");
-                                int idAtualizar = 0;
-                                try {
-                                    idAtualizar = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Entrada inválida! Digite apenas números.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-
-                                for (Item item : clienteLogado.getMeusItens()) {
-                                    if (item.getId() == idAtualizar) {
-                                        item.atualizaritem(sc);
-                                    }
-                                }
-                                break;
-
-                            case 9:
-                                if(clienteLogado.getMeusItens().isEmpty()) {
-                                    System.out.println("Nenhum item adicionado!");
-                                    break;
-                                }
-
-                                for(Item item : clienteLogado.getMeusItens()) {
-                                    item.exibirItens();
-                                }
-
-                                Item i = null;
-                                System.out.println("Digite o ID do item que deseja excluir: ");
-                                int idExcluir = 0;
-                                try {
-                                    idExcluir = sc.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Entrada inválida! Digite apenas números.");
-                                    sc.nextLine();
-                                    break;
-                                }
-                                sc.nextLine();
-
-                                for (Item item : clienteLogado.getMeusItens()) {
-                                    if (item.getId() == idExcluir) {
-                                        i = item;
-                                        break;
-                                    }
-                                }
-                                if (i != null) {
-                                    clienteLogado.getMeusItens().remove(i);
-                                    System.out.println("Item excluído com sucesso!");
-                                } else {
-                                    System.out.println("Item não encontrado.");
-                                }
-                                break;
-
-                            case 0:
-                                System.out.println("Volte sempre!");
-                                clienteLogado = null;
-                                logado = false;
-                                break;
-
-                            default:
-                                System.out.println("Opção inválida, tente novamente!");
-                                break;
-                        }
-                    }
-                    break;
-
-                case 0:
-                    sc.close();
-                    return;
-
-                default:
-                    System.out.println("Opção inválida, tente novamente!");
-                    break;
-            }
+			case 3:
+				System.out.println("Novo CEP: ");
+				this.cep = sc.nextLine(); 
+				
+				System.out.println("Novo endereço: ");
+				this.endereco = sc.nextLine();							
+				
+				System.out.println("Número da casa: ");
+				this.numCasa = sc.nextInt();
+				sc.nextLine();
+				
+				System.out.println("Complemento: ");
+				this.complem = sc.nextLine();
+				break;
+				
+			case 4: 
+				System.out.println("Crie uma nova senha: ");
+				String novaSenha = sc.nextLine();
+				
+				if (novaSenha.equals(this.senha)) {
+					System.out.println("A nova senha não pode ser igual à antiga!");
+					break;
+				}
+				
+				String confNovaSenha;
+				do {
+					System.out.println("Repita a senha: ");
+					confNovaSenha = sc.nextLine();
+					if (!confNovaSenha.equals(novaSenha)) {
+						System.out.println("As senhas não conferem. Tente novamente!");
+					}
+				} while (!confNovaSenha.equals(novaSenha));
+				
+					this.senha = novaSenha;
+					System.out.println("Senha alterada com sucesso!");
+				break;
+				
+			case 5:
+				vendedor.alterarDescricao(sc);
+				
+			default:
+				System.out.println("Essa opção não existe, tente novamente!");
+				break;
+			}
+		} catch (Exception e) {
+	        System.out.println("Erro de entrada: digite um valor válido. " + e.getMessage());
+	        sc.nextLine(); 
+	    }
+	}
+	
+	
+	// MODO VENDEDOR 
+	public void ativarModoVendedor(Scanner sc) {
+        if (vendedor == null) {
+        	if(descricaoVendedor == null || descricaoVendedor.trim().isEmpty()) {
+	        	System.out.println("Crie uma descrição da sua página: ");
+				descricaoVendedor = sc.nextLine();
+				if (descricaoVendedor == null || descricaoVendedor.trim().isEmpty()) {
+		            System.out.println("Descrição inválida. Tente novamente!");
+		            return;
+		        }
+        	}
+            vendedor = new ModoVendedor(descricaoVendedor);
+            System.out.println("Modo vendedor ativado com sucesso!");
+        } else {
+            System.out.println("O Modo Vendedor já se encontra ativo.");
         }
     }
+
+    public void desativarModoVendedor(Scanner sc) {
+        if (vendedor != null) {
+        	System.out.println("Tem certeza de que deseja desativar o Modo Vendedor? (S/N)");
+        	String sairMV = sc.nextLine();
+        	if(sairMV.equalsIgnoreCase("S")) {
+        		vendedor = null;
+        		System.out.println("Modo vendedor desativado com sucesso!");
+        	} else if (sairMV.equalsIgnoreCase("N")){
+        		System.out.println("Desativação cancelada.!");
+        	} else {
+                System.out.println("Resposta inválida. Digite apenas S ou N.");
+            }
+        } else {
+            System.out.println("Não é possível desativar: o modo vendedor não está ativo.");
+        }
+    }
+
+    public ModoVendedor getVendedor() {
+        return vendedor;
+    }
 }
+	
+	
