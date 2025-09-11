@@ -21,7 +21,7 @@ public class ClienteTeste {
             
             try {
                 op = sc.nextInt();
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException e) { //Exceção para somente o Scanner pedido: Inteiro
                 System.out.println("Entrada inválida! Digite apenas números.");
                 sc.nextLine();
                 continue;
@@ -32,27 +32,26 @@ public class ClienteTeste {
                 case 1:
                     String nomeC;
                     while (true) {
-                        System.out.println("Insira seu nome (somente letras): ");
-                        nomeC = sc.nextLine().trim();
-                        if (nomeC.matches("[A-Za-zÀ-ÿ ]+")) break;
+                        System.out.println("Digite seu nome (apenas letras): ");
+                        nomeC = sc.nextLine().trim(); 	 // Não ler espaços em branco no começo e fim (somente meio)
+                        if (nomeC.matches("[A-Za-zÀ-ÿ ]+")) break; 		//Verifica se nomeC corresponde ao padrão do REGEX
                         System.out.println("Nome inválido! Use apenas letras e espaços.");
                     }
 
                     String cpfC;
                     while (true) {
-                        System.out.println("CPF (somente números, 11 dígitos): ");
+                        System.out.println("CPF (11 dígitos, apenas números): ");
                         cpfC = sc.nextLine().trim();
                         if (cpfC.matches("\\d{11}")) break;
-                        System.out.println("CPF inválido! Digite exatamente 11 NUMEROS.");
+                        System.out.println("CPF inválido. Certifique-se de digitar 11 números, sem pontos ou traços.");
                     }
 
                     String emailC;
                     while (true) {
-                        System.out.println("Email (deve ser da Google): ");
+                        System.out.println("Email (deve ser um endereço @gmail.com): ");
                         emailC = sc.nextLine().trim();
-                        if (emailC.contains("@gmail.com")) break;
-                        System.out.println("Email inválido! Deve conter '@gmail.com'.");
-                        System.out.println("Exemplo: 'usuario@gmail.com'");
+                        if (emailC.endsWith("@gmail.com")) break;
+                        System.out.println("Email invalido. Apenas endereços @gmail.com são aceitos.");
                     }
 
                     String dataNascC;
@@ -109,12 +108,12 @@ public class ClienteTeste {
                     } while (!confSenha.equals(senhaC));
 
                     lista.add(new Cliente(nomeC, cpfC, emailC, senhaC, confSenha, cepC, enderecoC, numCasaC, dataNascC, complemC));
-                    System.out.println("Usuário criado com sucesso!");
+                    System.out.println("Conta criada com sucesso.");
                     break;
 
                 case 2:
                     if (lista.isEmpty()) {
-                        System.out.println("Nenhum usuário cadastrado!");
+                        System.out.println("Usuário ou senha inválidos.");
                         break;
                     }
 
@@ -141,7 +140,7 @@ public class ClienteTeste {
                     logado = true;
 
                     while (logado) {
-                        System.out.println("\n---MENU DO CLIENTE---");
+                        System.out.println("\n--- MENU DO CLIENTE ---");
                         System.out.println("1. Visualizar Perfil");
                         System.out.println("2. Alterar Dados");
                         System.out.println("3. Modo Vendedor");
