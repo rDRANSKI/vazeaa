@@ -130,7 +130,7 @@ public class Cliente {
 		System.out.println("Nome: " + nome);
 		System.out.println("E-mail: " + email);
 		System.out.println("CPF: " + cpf);
-		System.out.println("Data de nascimento: " + (dataNasc != null ? email : "Não informado"));
+		System.out.println("Data de nascimento: " + (dataNasc != null ? dataNasc : "Não informado"));
 		System.out.println("CEP: " + cep);
 		System.out.println("Endereço: " + endereco + ", " + numCasa);
 		System.out.println("Complemento: " + (complem != null ? complem : "Não informado"));
@@ -146,14 +146,13 @@ public class Cliente {
 	//ALTERAR DADOS
 	public void alterarDados(Scanner sc) {
 		try {
-			System.out.println("\n---DIGITE A OPÇÃO QUE DESEJA ALTERAR:---");
+			System.out.println("\n--- DIGITE A OPÇÃO DESEJADA: ---");
 			System.out.println("1. Alterar Nome");
 			System.out.println("2. Alterar Email");
-			System.out.println("3. Alterar Data de Nascimento");
-			System.out.println("4. Alterar Endereço");
-			System.out.println("5. Alterar Senha");
+			System.out.println("3. Alterar Endereço");
+			System.out.println("4. Alterar Senha");
 			if (isModoVendedor()) {
-				System.out.println("6. Alterar Descrição: ");
+				System.out.println("5. Alterar Descrição: ");
 			}
 			System.out.println("Escolha uma opção:");
 			int opAlterar= sc.nextInt();
@@ -167,23 +166,37 @@ public class Cliente {
 			switch(opAlterar) {
 			case 1: 
 				System.out.println("\nNovo nome: ");
-				this.nome = sc.nextLine();
-				System.out.println("Nome alterado com sucesso!");
+				String novoNome = sc.nextLine().trim();
+				
+				if (novoNome.isEmpty()) {
+					System.out.println("O nome não pode ser vazio!");
+				} else if (novoNome.matches("[A-Za-zÀ-ÿ ]+")) {
+					System.out.println("Nome inválido! Use apenas letras e espaços.");
+				} else if (novoNome.equals(this.nome)) {
+					System.out.println("O nome digitado é igual ao já cadastrado. Tente novamente!");
+				} else {
+					this.nome = novoNome;
+					System.out.println("Nome alterado com sucesso!");
+				}
 				break;
 			
 			case 2:
 				System.out.println("Novo email: ");
-				this.email = sc.nextLine();
-				System.out.println("Email alterado com sucesso!");
-				break;
-			
-			case 3:
-				System.out.println("Nova data de nascimento(DD/MM/AAAA): ");
-				this.dataNasc = sc.nextLine();
-				System.out.println("Data alterada com sucesso!");
-				break;
+				String novoEmail = sc.nextLine().trim();
 				
-			case 4:
+				if (novoEmail.isEmpty()) {
+			        System.out.println("O email digitado não pode ser vazio!");
+			    } else if (!novoEmail.endsWith("@gmail.com")) {
+			        System.out.println("Email invalido. Apenas endereços @gmail.com são aceitos.");		        
+			    } else if (novoEmail.equals(this.email)) {
+			        System.out.println("O email digitado é igual ao já cadastrado. Tente novamente!");   
+			    } else {
+			        this.email = novoEmail;
+			        System.out.println("Email alterado com sucesso!");
+			    }
+			    break;
+
+			case 3:
 				System.out.println("Novo CEP: ");
 				this.cep = sc.nextLine(); 
 				
@@ -197,26 +210,32 @@ public class Cliente {
 				System.out.println("Complemento: ");
 				this.complem = sc.nextLine();
 				break;
-			case 5: 
+				
+			case 4: 
 				System.out.println("Crie uma nova senha: ");
 				String novaSenha = sc.nextLine();
+				
+				if (novaSenha.equals(this.senha)) {
+					System.out.println("A nova senha não pode ser igual à antiga!");
+					break;
+				}
 				
 				String confNovaSenha;
 				do {
 					System.out.println("Repita a senha: ");
 					confNovaSenha = sc.nextLine();
-					if(!confNovaSenha.equals(novaSenha)) {
+					if (!confNovaSenha.equals(novaSenha)) {
 						System.out.println("As senhas não conferem. Tente novamente!");
 					}
-				} while(!confNovaSenha.equals(novaSenha));
+				} while (!confNovaSenha.equals(novaSenha));
 				
-				if(novaSenha.equals(confNovaSenha)) {
 					this.senha = novaSenha;
-				}
+					System.out.println("Senha alterada com sucesso!");
 				break;
 				
-			case 6:
+			case 5:
 				vendedor.alterarDescricao(sc);
+				
 			default:
 				System.out.println("Essa opção não existe, tente novamente!");
 				break;
@@ -240,26 +259,26 @@ public class Cliente {
 		        }
         	}
             vendedor = new ModoVendedor(descricaoVendedor);
-            System.out.println("Modo vendedor ativado!");
+            System.out.println("Modo vendedor ativado com sucesso!");
         } else {
-            System.out.println("Você já está no modo vendedor.");
+            System.out.println("O Modo Vendedor já se encontra ativo.");
         }
     }
 
     public void desativarModoVendedor(Scanner sc) {
         if (vendedor != null) {
-        	System.out.println("Certeza que quer sair do Modo Vendedor? (S/N)");
+        	System.out.println("Tem certeza de que deseja desativar o Modo Vendedor? (S/N)");
         	String sairMV = sc.nextLine();
         	if(sairMV.equalsIgnoreCase("S")) {
         		vendedor = null;
-        		System.out.println("Modo vendedor desativado.");
+        		System.out.println("Modo vendedor desativado com sucesso!");
         	} else if (sairMV.equalsIgnoreCase("N")){
-        		System.out.println("Desativação cancelada!");
+        		System.out.println("Desativação cancelada.!");
         	} else {
                 System.out.println("Resposta inválida. Digite apenas S ou N.");
             }
         } else {
-            System.out.println("Você não está no modo vendedor.");
+            System.out.println("Não é possível desativar: o modo vendedor não está ativo.");
         }
     }
 
