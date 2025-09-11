@@ -16,8 +16,9 @@ public class ClienteTeste {
             System.out.println("2. Login");
             System.out.println("0. Sair");
             System.out.println("Escolha uma opção:");
-//ja feito tratamento de erros no "main"
+
             int op = 0;
+            
             try {
                 op = sc.nextInt();
             } catch (InputMismatchException e) {
@@ -51,23 +52,23 @@ public class ClienteTeste {
                         emailC = sc.nextLine().trim();
                         if (emailC.contains("@gmail.com")) break;
                         System.out.println("Email inválido! Deve conter '@gmail.com'.");
-                        System.out.println("Excemplo: 'usuario@gmail.com'");
+                        System.out.println("Exemplo: 'usuario@gmail.com'");
                     }
 
                     String dataNascC;
                     while (true) {
-                        System.out.println("Data de Nascimento (DD/MM/AAAA): ");
+                        System.out.println("Data de Nascimento (formato: DD/MM/AAAA): ");
                         dataNascC = sc.nextLine().trim();
                         if (dataNascC.matches("\\d{2}/\\d{2}/\\d{4}")) break;
-                        System.out.println("Formato inválido! Use DD/MM/AAAA (com barras).");
+                        System.out.println("Formato inválido! Use o formato DD/MM/AAAA.");
                     }
 
                     String cepC;
                     while (true) {
-                        System.out.println("CEP (8 números): ");
+                        System.out.println("CEP (formato: 00000-000): ");
                         cepC = sc.nextLine().trim();
-                        if (cepC.matches("\\d{8}")) break;
-                        System.out.println("CEP inválido! Digite exatamente 8 NUMEROS.");
+                        if (cepC.matches("\\d{5}-\\d{3}")) break;
+                        System.out.println("CEP inválido! Use o formato 00000-000.");
                     }
 
                     String enderecoC;
@@ -85,7 +86,7 @@ public class ClienteTeste {
                             numCasaC = Integer.parseInt(numCasaStr);
                             break;
                         }
-                        System.out.println("Número inválido! Digite apenas NUMEROS.");
+                        System.out.println("Número inválido! Digite apenas NÚMEROS.");
                     }
 
                     System.out.println("Complemento (opcional): ");
@@ -136,7 +137,7 @@ public class ClienteTeste {
                         break;
                     }
 
-                    System.out.println("Login realizado com sucesso! Bem-vindo, " + clienteLogado.getNome());
+                    System.out.println("Login realizado com sucesso! Bem-vindo, " + clienteLogado.getNome() + "!");
                     logado = true;
 
                     while (logado) {
@@ -224,7 +225,7 @@ public class ClienteTeste {
                                         item.exibirItens();
                                     }
 
-                                    System.out.println("Digite o id do item que deseja comprar (ou '0' para finalizar): ");
+                                    System.out.println("Digite o ID do item que deseja comprar (ou '0' para finalizar): ");
                                     int idCompra = 0;
                                     try {
                                         idCompra = sc.nextInt();
@@ -314,7 +315,7 @@ public class ClienteTeste {
                                     try {
                                         cvv = sc.nextInt();
                                     } catch (InputMismatchException e) {
-                                        System.out.println("Entrada inválida! Digite apenas números para o CVV.");
+                                        System.out.println("Entrada inválida! Digite apenas números.");
                                         sc.nextLine();
                                         break;
                                     }
@@ -428,7 +429,7 @@ public class ClienteTeste {
                                 }
 
                                 Item i = null;
-                                System.out.println("Digite o id do item que deseja excluir: ");
+                                System.out.println("Digite o ID do item que deseja excluir: ");
                                 int idExcluir = 0;
                                 try {
                                     idExcluir = sc.nextInt();
