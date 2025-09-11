@@ -22,10 +22,6 @@ public class Carrinho {
         itens.add(itemCarrinho);
     }
 
-    public void removerItem(String nomeItem) {
-        itens.removeIf(i -> i.getNomeItem().equalsIgnoreCase(nomeItem));
-    }
-
     public void visualizarCarrinho() {
         if (itens.isEmpty()) {
             System.out.println("Carrinho está vazio!");
